@@ -151,7 +151,7 @@ button:hover {
 
 /* ----------  Mobile Style --------------*/
 
-@media (max-width: 768px) {
+@media (max-width: 375px) {
   .App-container {
     flex-direction: column; /* Stack containers vertically */
     background-image: url(/public/images/bg-intro-mobile.png);
