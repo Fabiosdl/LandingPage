@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+}
+
+.App-container{
+  height: 100vh;
+  display: flex;
+  background-image: url(/public/images/bg-intro-desktop.png);
+  background-color: hsl(0, 100%, 74%);
+  overflow-y: auto;
+}
+
+@media (max-width: 350px){
+  .App-container{
+    height: 100vh;
+    display: flex;
+    background-image: url(/public/images/bg-intro-mobile.png);
+    background-color: hsl(0, 100%, 74%);
+    overflow-y: auto;
+  }
+
+  .left-container, .right-container {
+    flex:1; /*to divide 50% of the screen*/
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+
+}
+.left-container, .right-container {
+  flex:1; /*to divide 50% of the screen*/
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+
+.left-container text {
+  font-size: 43px;
+  font-weight: 650;
+  line-height: 1.2;
+  margin-left: 140px;
+  margin-bottom: -4px;
+}
+
+.left-container h5 {
+  font-size: 14px;
+  font-weight: 100;
+  margin-left: 140px;
+  margin-right: 60px;
+}
+/*--------------- Right Column ---------------*/
+
+.subscription-button, .form-container {
+  width: 500px;
+  border-radius: 8px;
+  box-shadow: 0 7px 0 rgba(0, 0, 0, 0.15); /*(shadow color, black with 15% opacity)*/
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+  margin-right: 140px;
+}
+
+.subscription-button {  
+  background-color:hsl(248, 32%, 49%);  
+  min-height: 55px;
+  color: white;
+  font-size: 14px;
+  font-weight: 100;
+  margin-top: 60px;
+}
+
+.form-container {
+  background-color: white;
+  border-radius: 8px;
+  height: 650px;
+}
+
+.input-field {
+  height: 50px;
+  width: 410px;
+  border: 0.5px solid gray;
+  border-radius: 8px;
+  margin-top: 15px;
+  padding-left: 10px;
+}
+
+.input-field.errors {
+  height: 50px;
+  width: 410px;
+  border: 1.5px solid hsl(0, 100%, 74%) ;
+  border-radius: 8px;
+  margin-top: 15px;
+  padding-left: 10px;
+}
+
+button {
+  height: 50px;
+  width: 425px;  
+  border: none;
+  border-radius: 8px;
+  background-color: hsl(154, 59%, 51%);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 3px 0 hsl(153, 56%, 35%);
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.input-field::placeholder{
+  color: gray;
+  padding-left: 20px;
+  font-weight: bold;
+}
+
+.input-field.errors::placeholder{
+  color: hsl(0, 100%, 74%) ;
+  padding-left: 20px;
+  font-weight: bold;
+}
+
+.form-container p{
+  color: hsl(246, 25%, 77%);
+  font-size: 10px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-container a{
+  color: hsl(0, 100%, 74%) ;
+  font-size: 10px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.error-message {
+  display: flex;
+  justify-content: right;
+  align-items: end;
+  color: hsl(0, 100%, 74%) ;
+  font-size: 10px;
+  font-style: italic;
+}
+
+.error-icon {
+  margin-left: -35px;
+  transform: translateY(30%);
+}
