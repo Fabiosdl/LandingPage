@@ -90,7 +90,7 @@ function App() {
               onChange={handleInputChange} 
               placeholder={ errors.firstName ? '' : 'First Name'}
               className={`input-field ${ errors.firstName ? 'errors' : '' }`}/>
-            {errors.firstName && <img className="error-icon" src="/images/icon-error.svg" alt='Icon error'/>}
+            {errors.firstName && <img className="error-icon" src={`${process.env.PUBLIC_URL}/images/icon-error.svg`} alt='Icon error'/>}
             <span className='error-message'>{errors.firstName}</span>
 
             <input type="text" id="lastName" name="lastName"
@@ -98,7 +98,7 @@ function App() {
               onChange={handleInputChange}
               className={`input-field ${ errors.lastName ? 'errors' : '' }`}
               placeholder={errors.lastName ? '' : 'Last Name'}/>
-            {errors.lastName && <img className="error-icon" src="/images/icon-error.svg" alt='Icon error'/>}
+            {errors.lastName && <img className="error-icon" src={`${process.env.PUBLIC_URL}/images/icon-error.svg`} alt='Icon error'/>}
             <span className='error-message'>{errors.lastName}</span>
 
             <input type="email" id="email" name="email"  
@@ -106,7 +106,7 @@ function App() {
               onChange={handleInputChange}
               className={`input-field ${ errors.email ? 'errors' : '' }`}
               placeholder={ errors.email ? "email@example.com" : "Email Address" }/>
-            {errors.email && <img className="error-icon" src="/images/icon-error.svg" alt='Icon error'/>}
+            {errors.email && <img className="error-icon" src={`${process.env.PUBLIC_URL}/images/icon-error.svg`} alt='Icon error'/>}
             <span className='error-message'>{errors.email}</span>  
 
             <input type="password" id="password" name="password" 
@@ -114,7 +114,7 @@ function App() {
               onChange={handleInputChange}
               className={`input-field ${ errors.password ? 'errors' : '' }`}
               placeholder={ errors.password ? '' : 'Password'}/>
-            {errors.password && <img className="error-icon" src="/images/icon-error.svg" alt='Icon error'/>}
+            {errors.password && <img className="error-icon" src={`${process.env.PUBLIC_URL}/images/icon-error.svg`} alt='Icon error'/>}
             <span className='error-message'>{errors.password}</span>
 
             <button type="submit">CLAIM YOUR FREE TRIAL</button>
