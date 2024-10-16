@@ -28,17 +28,19 @@ html, body {
 
 
 .left-container text {
-  font-size: 43px;
+  font-size: 50px;
   font-weight: 650;
   line-height: 1.2;
-  margin-left: 140px;
+  margin-left: 150px;
+  margin-right: 60px;
   margin-bottom: -4px;
 }
 
 .left-container h5 {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 100;
-  margin-left: 140px;
+  line-height: 1.5;
+  margin-left: 150px;
   margin-right: 60px;
 }
 
@@ -70,7 +72,8 @@ html, body {
   border-radius: 8px;
   height: auto;
   max-height: 100%;
-  padding-top: 10px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .input-field {
@@ -102,7 +105,6 @@ button {
   font-weight: 600;
   box-shadow: 0 3px 0 hsl(153, 56%, 35%);
   margin-top: 15px;
-  margin-bottom: 10px;
 }
 
 button:hover {
