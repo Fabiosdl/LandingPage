@@ -31,8 +31,9 @@ html, body {
   font-size: 50px;
   font-weight: 650;
   line-height: 1.2;
-  margin-left: 150px;
+  margin-left: 155px;
   margin-right: 60px;
+  margin-top: 20px;
   margin-bottom: -4px;
 }
 
@@ -40,7 +41,7 @@ html, body {
   font-size: 16px;
   font-weight: 100;
   line-height: 1.5;
-  margin-left: 150px;
+  margin-left: 155px;
   margin-right: 60px;
 }
 
@@ -60,7 +61,7 @@ html, body {
 
 .subscription-button {  
   background-color:hsl(248, 32%, 49%);  
-  min-height: 55px;
+  min-height: 60px;
   color: white;
   font-size: 14px;
   font-weight: 100;
@@ -80,8 +81,8 @@ html, body {
   height: 50px;  
   width: 410px;
   border: 0.5px solid gray;
-  border-radius: 8px;
-  margin-top: 15px;
+  border-radius: 6px;
+  margin-top: 20px;
   padding-left: 10px;
 }
 
@@ -95,7 +96,7 @@ html, body {
 }
 
 button {          
-  height: 50px;
+  height: 55px;
   width: 425px;  
   border: none;
   border-radius: 8px;
