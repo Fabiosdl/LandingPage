@@ -159,10 +159,12 @@ button:hover {
 
 @media (max-width: 750px) {
   .App-container {
+
     flex-direction: column; /* Stack containers vertically */
     background-image: url(/public/images/bg-intro-mobile.png);
     background-size: cover;
     background-position: center;
+    
   }
 
   .left-container, .right-container {
@@ -177,8 +179,8 @@ button:hover {
     margin-top: 40px;
     width: 80%;
     max-width: 350px;
-    font-size: 30px;
-    margin-left: 0;    
+    font-size: 30px;  
+    margin: 0 auto;
     margin-bottom: 25px;
   }
 
