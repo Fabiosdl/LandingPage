@@ -20,8 +20,15 @@ function App() {
     // when the user is "changing" the form (If typing it and then leaving it blank).
   
     // Validate the input value
-    if(!value.trim()) {// if input is empty
+    // Validate email
+    if(name==='email' && !value.match("^[a-zA-Z0-9_%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$") ){
+      const emailMatchError = {};
+      emailMatchError.email = 'Looks like this is not an email';
+      setErrors(emailMatchError);    
+    }
+    else if(!value.trim()) {// if input is empty or doesn't follow the email pattern
       // Custom error messages based on the field name
+
       let formName1 = name.charAt(0).toUpperCase();
       let formName2 = '';
 
