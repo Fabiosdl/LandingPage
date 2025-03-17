@@ -12,7 +12,7 @@ html, body {
   height: 100vh;
   display: flex;
   background-image: url(/public/images/bg-intro-desktop.png);
-  background-color: hsl(0, 100%, 74%);
+  background-color: hsl(22, 88%, 63%);
   overflow-y: auto;
 }
 

@@ -1,72 +1,151 @@
-import React, {useState} from 'react';
+import React, {useState, useSyncExternalStore} from 'react';
 import './App.css';
 
 function App() {
 
-  const [inputValue, setInputValue] = useState({
-    firstName: '', /**name of the inputs */
-    lastName: '',
-    email: '',
-    password: ''
-  });
+  const requiredFieldValidator = (fieldName, value) => {
+    if (value.length > 0) {
+      return {
+        hasError: false,
+        message: '',
+      }
+    }
+    return {
+      hasError: true,
+      message: `${fieldName} is required.`
+    }
+  }
 
+  const minLengthValidator = (minLength) => (fieldName, value) => {
+    if (value.length > minLength) {
+      return {
+        hasError: false,
+        message: '',
+      }
+    }
+    return {
+      hasError: true,
+      message: `${fieldName} must be at least ${minLength} characters in length.`
+    }
+  }
+
+  const emailValidator = (fieldName, value) => {
+    if (value.match("^[a-zA-Z0-9_%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$")) {
+      return {
+        hasError: false,
+        message: '',
+      }
+    }
+
+    return {
+      hasError: true,
+      message: `${fieldName} does not look like an email.`
+    };
+  }
+
+  const [formState, setFormState] = useState({
+    firstName: {
+      id: 'firstName',
+      label: 'First Name',
+      value: '',
+      validators: [
+        requiredFieldValidator,
+        minLengthValidator(3),
+      ],
+      error: {
+        hasError: false,
+        message: '',
+      }
+    },
+    lastName: {
+      id: 'lastName',
+      label: 'Last Name',
+      value: '',
+      validators: [
+        requiredFieldValidator
+      ],
+      error: {
+        hasError: false,
+        message: '',
+      }
+    },
+    email: {
+      id: 'email',
+      label: 'Email Address',
+      value: '',
+      validators: [
+        requiredFieldValidator,
+        emailValidator,
+      ],
+      error: {
+        hasError: false,
+        message: '',
+      }
+    },
+    password: {
+      id: 'password',
+      label: 'Password',
+      value: '',
+      validators: [
+        requiredFieldValidator
+      ],
+      error: {
+        hasError: false,
+        message: '',
+      }
+    },
+  })
+  
   const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setInputValue({ ...inputValue, [name]: value });
 
-    // Setting up the validation error in the InputChange, guarantees that the error message shows up in real time
-    // when the user is "changing" the form (If typing it and then leaving it blank).
-  
-    // Validate the input value
-    // Validate email
-    if(name==='email' && !value.match("^[a-zA-Z0-9_%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$") ){
-      const emailMatchError = {};
-      emailMatchError.email = 'Looks like this is not an email';
-      setErrors(emailMatchError);    
-    }
-    else if(!value.trim()) {// if input is empty or doesn't follow the email pattern
-      // Custom error messages based on the field name
+    const fieldState = formState[name];
+    const validators = fieldState.validators
+    let validationResult = {
+      hasError: false,
+      message: ''
+    };
 
-      let formName1 = name.charAt(0).toUpperCase();
-      let formName2 = '';
-
-      for(let i = 1; i < name.length; i++){
-        if(name.charAt(i) === name.charAt(i).toUpperCase()){
-          formName1 += name.substring(1,i);        
-          formName2 = ' ' + name.substring(i);
-        }
+    for (const validator of validators) {
+      validationResult = validator(fieldState.label, value);
+      if (validationResult.hasError) {
+        break;
       }
-      if(!formName2) formName1 += name.substring(1);
-      setErrors({ ...errors, [name]: `${formName1} ${formName2} cannot be empty.`});
-    }      
-    else {
-      // If no error, clear the error for the field.
-      setErrors({ ...errors, [name]: ''});
     }
 
-    /*
-    ...errors: This keeps all the existing error messages intact. To avoid interfere in the other errors messages
-    [name]: This dynamically updates the error for the current field (either firstName, lastName, email, or password).
-    */
+    // to be able to input value in the form (JavaScript construct called the construction)
+    // breaking down an object, assigning to another object
+    setFormState((prevFormState) => ({
+      ...prevFormState,
+      [name]: {
+        ...prevFormState[name],
+        value,
+        error: validationResult,
+      }
+    }));
+    return;
   };
-
   const handleSubmit = (e) => {
-    e.preventDefault(); //to erase all data after submission.
+    e.preventDefault(); // Prevent form submission from refreshing the page
     
-    // putting the validation form in the Submit guarantees that the app won't submit the data if
-    // all the required forms are not filled in.
-
     const errorAfterSubmission = {};
-
-    if (!inputValue.firstName.trim()) errorAfterSubmission.firstName = 'First Name cannot be empty';
-    if (!inputValue.lastName.trim()) errorAfterSubmission.lastName = 'Last Name cannot be empty';
-    if (!inputValue.email.trim()) errorAfterSubmission.email = 'Email cannot be empty';
-    if (!inputValue.password.trim()) errorAfterSubmission.password = 'Password cannot be empty';
-
+  
+    // Iterate through formState to check each field's value
+    Object.keys(formState).forEach((fieldKey) => {
+      const field = formState[fieldKey];
+      const value = field.value.trim();
+      
+      if (!value) {
+        errorAfterSubmission[fieldKey] = `${field.label} cannot be empty`;
+      }
+    });
+  
     setErrors(errorAfterSubmission);
+
   };
+  
 
   return (
     <div className='App-container'>
@@ -90,39 +169,20 @@ function App() {
         <div className='form-container'>
 
           <form id='registration' onSubmit={handleSubmit}>
+            
+            {Object.values(formState).map(fieldState => (
+                <>
+                <input 
+                  type="text" id={fieldState.id} name={fieldState.id} 
+                  value={fieldState.value} 
+                  onChange={handleInputChange} 
+                  placeholder={fieldState.error.hasError ? '' : fieldState.label}
+                  className={`input-field ${ fieldState.error.hasError ? 'errors' : '' }`}/>
+                  {fieldState.error.hasError && <img className="error-icon" src={`${process.env.PUBLIC_URL}/images/icon-error.svg`} alt='Icon error'/>}
+                  <span className='error-message'>{fieldState.error.message}</span>s
+                </>
+            ))}
 
-            <input 
-              type="text" id="firstName" name="firstName" 
-              value={inputValue.firstName} 
-              onChange={handleInputChange} 
-              placeholder={ errors.firstName ? '' : 'First Name'}
-              className={`input-field ${ errors.firstName ? 'errors' : '' }`}/>
-            {errors.firstName && <img className="error-icon" src={`${process.env.PUBLIC_URL}/images/icon-error.svg`} alt='Icon error'/>}
-            <span className='error-message'>{errors.firstName}</span>
-
-            <input type="text" id="lastName" name="lastName"
-              value={inputValue.lastName} 
-              onChange={handleInputChange}
-              className={`input-field ${ errors.lastName ? 'errors' : '' }`}
-              placeholder={errors.lastName ? '' : 'Last Name'}/>
-            {errors.lastName && <img className="error-icon" src={`${process.env.PUBLIC_URL}/images/icon-error.svg`} alt='Icon error'/>}
-            <span className='error-message'>{errors.lastName}</span>
-
-            <input type="email" id="email" name="email"  
-              value={inputValue.email} 
-              onChange={handleInputChange}
-              className={`input-field ${ errors.email ? 'errors' : '' }`}
-              placeholder={ errors.email ? "email@example.com" : "Email Address" }/>
-            {errors.email && <img className="error-icon" src={`${process.env.PUBLIC_URL}/images/icon-error.svg`} alt='Icon error'/>}
-            <span className='error-message'>{errors.email}</span>  
-
-            <input type="password" id="password" name="password" 
-              value={inputValue.password} 
-              onChange={handleInputChange}
-              className={`input-field ${ errors.password ? 'errors' : '' }`}
-              placeholder={ errors.password ? '' : 'Password'}/>
-            {errors.password && <img className="error-icon" src={`${process.env.PUBLIC_URL}/images/icon-error.svg`} alt='Icon error'/>}
-            <span className='error-message'>{errors.password}</span>
 
             <button type="submit">CLAIM YOUR FREE TRIAL</button>
 
